@@ -1,0 +1,27 @@
+version: '3.3'
+services:
+  db: 
+    environment:
+        MYSQL_ROOT_PASSWORD: "123456"
+        MYSQL_USER: "guns"
+        MYSQL_PASS: "guns"
+    image: "docker.io/mysql:latest"
+    restart: always
+    build: ./db
+    volumes:
+        - "./db/conf/my.cnf:/etc/my.cnf"
+        - "./db/init:/docker-entrypoint-initdb.d/"
+        - "./db/sql:/opt/guns"
+    ports:
+        - "3306:3306"
+  redis: 
+    image: redis
+    restart: always
+  app:
+    build: ./app/
+    depends_on: 
+      - db
+      - redis
+    ports:
+      - "8022:8022"
+    restart: always

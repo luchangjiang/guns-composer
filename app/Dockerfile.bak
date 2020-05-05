@@ -1,0 +1,6 @@
+FROM openjdk:8u222-jre
+WORKDIR /usr/local/guns
+ADD guns-1.0.0-SNAPSHOT.jar .
+ADD application.yml .
+EXPOSE 8022
+CMD ["java","-jar","guns-1.0.0-SNAPSHOT.jar"]
